@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <header>
+    <!-- place navbar here -->
+  </header>
+  <main>
+    <div class="container">
+      <div class="d-flex w-100 justify-content-end">
+        <a class="text-decoration-none" href="/chi-tiet/<%=data._id%>">Quay về</a>
+    </div>
+    <div class="d-flex justify-content-center row">
+      <img class="card-img-top w-75" src="<%=data.anhBia[0]%>" alt="Card image cap">
+      <%for(var i = 0; i < data.anhNoiDung.length; i++){%>
+          <img class="card-img-top w-75" src="<%=data.anhNoiDung[i]%>" alt="Card image cap">
+      <%}%>
+    </div>
+    <div class="container">
+      <div class="d-flex w-100 justify-content-end">
+        <a class="text-decoration-none" href="/chi-tiet/<%=data._id%>">Quay về</a>
+    </div>
+  </main>
+  <footer>
+    <script type='text/javascript'>
+      let myidtoinsert = window.location.toString();
+      if(myidtoinsert.indexOf('?') != -1){
+        myidtoinsert = myidtoinsert.substring(myidtoinsert.lastIndexOf('/')+1, myidtoinsert.indexOf('?'));
+      } else {
+        myidtoinsert = myidtoinsert.substring(myidtoinsert.lastIndexOf('/')+1);
+      }
+      let list = document.querySelectorAll("a")
+      console.log(list);
+      for (let i = 0; i < list.length; i++) {
+        list[i].href += "/" + myidtoinsert;
+      }
+    </script>
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

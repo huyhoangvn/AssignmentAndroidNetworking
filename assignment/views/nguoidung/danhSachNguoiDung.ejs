@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <header>
+  </header>
+  <main>
+    <!-- Nav tabs -->
+    <div class="container">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a id="listuser" href="/danh-sach-nguoi-dung" class="nav-link active" aria-selected="true">Danh sách người dùng</a>
+        </li>
+        <li  class="nav-item" role="presentation">
+          <a id="adduser" href="/them-nguoi-dung" class="nav-link" aria-selected="false">Thêm người dùng</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a id="listcomic" href="/danh-sach-truyen" class="nav-link" aria-selected="false">Danh sách truyện</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a id="addcomic" href="/them-truyen" class="nav-link" aria-selected="false">Thêm truyện</a>
+        </li>
+      </ul>
+      
+      <!-- Tab panes -->
+      <div class="tab-content d-flex row justify-content-center">
+        <form method="GET" action="" class="d-flex justify-content-between m-3">
+          <input type="text" name="fullname" class="m-1 form-control" placeholder="Tìm tên người dùng"/> <br>
+          <input type="text" name="email" class="m-1 form-control" placeholder="Tìm email"/> <br>
+          <input type="text" name="username" class="m-1 form-control" placeholder="Tìm username"/> <br>
+          <input type="number" name="limit" min="1" max="1000" class="m-1 form-control" placeholder="Số bản ghi"/> <br>
+          <input type="number" name="page" min="1" max="1000" class="m-1 form-control" placeholder="Trang"/> <br>
+          <button class="btn btn-primary m-1" type="submit" value="submit">Tìm</button>
+        </form>
+        <div class="tab-content d-flex col align-content-center m-1">
+          <span class="fw-bold">Tổng số người dùng: &nbsp; </span>
+          <span><%=data.soLuong%></span>
+        </div>
+        <!-- <div class="tab-content d-flex col align-content-center m-1">
+          <span class="fw-bold">Tổng bản ghi hiển thị: &nbsp; </span>
+          <span><%=data.danhSach.length%></span>
+        </div> -->
+        <div class="tab-content d-flex row justify-content-center">
+          <table class="table text-break table-bordered">
+            <thead>
+              <tr class="bg-secondary bg-opacity-50 text-bg-info">
+                <th scope="col" class="col-1">STT</th>
+                <th scope="col" class="col-2">Họ và tên</th>
+                <th scope="col" class="col-2">Email</th>
+                <th scope="col" class="col-2">Username</th>
+                <th scope="col" class="col-1">Vai trò</th>
+                <th scope="col" class="col-1">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%for(var i = 0; i < data.danhSach.length; i++){%>
+                <tr>
+                  <th scope="row"><%=i+1%></th>
+                  <td><%=data.danhSach[i].fullname%></td>
+                  <td><%=data.danhSach[i].email%></td>
+                  <td><%=data.danhSach[i].username%></td>
+                  <td><%=(data.danhSach[i].isAdmin)?"Admin":"Người Dùng"%></td>
+                  <td><a class="text-decoration-none deleteBtn btn btn-danger" href="/xoa-nguoi-dung/<%=data.danhSach[i]._id%>">Xóa</a></td>
+                </tr>
+              <%}%>
+            </tbody>
+          </table>
+        </div>
+      </div>    
+    </div>
+  </main>
+  <footer>
+    <!-- place footer here -->
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script type='text/javascript'>
+      let myidtoinsert = window.location.toString();
+      if(myidtoinsert.indexOf('?') != -1){
+        myidtoinsert = myidtoinsert.substring(myidtoinsert.lastIndexOf('/')+1, myidtoinsert.indexOf('?'));
+      } else {
+        myidtoinsert = myidtoinsert.substring(myidtoinsert.lastIndexOf('/')+1);
+      }
+      let list = document.querySelectorAll("a")
+      for (let i = 0; i < list.length; i++) {
+        list[i].href += "/" + myidtoinsert;
+      }
+      //Xóa
+      var elems = document.getElementsByClassName('deleteBtn');
+      var confirmIt = function (e) {
+          if (!confirm('Bạn có muốn xóa?')) e.preventDefault();
+      };
+      for (var i = 0, l = elems.length; i < l; i++) {
+          elems[i].addEventListener('click', confirmIt, false);
+      }
+      const urlParams = new URLSearchParams(window.location.search);
+      $( "input[name*='fullname']" ).val(urlParams.get('fullname'))
+      $( "input[name*='email']" ).val(urlParams.get('email'))
+      $( "input[name*='username']" ).val(urlParams.get('username'))
+      $( "input[name*='limit']" ).val(urlParams.get('limit'))
+      $( "input[name*='page']" ).val(urlParams.get('page'))
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
